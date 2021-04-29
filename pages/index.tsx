@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import { NextPage } from 'next'
 
-export default function Home() {
+const Home: NextPage = () => {
   return (
     <div>
       <Head>
@@ -23,7 +24,7 @@ export default function Home() {
           rel="noopener noreferrer"
         >
           Powered by{' '}
-          <span >
+          <span>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
         </a>
@@ -31,3 +32,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default Home
