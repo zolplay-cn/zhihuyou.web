@@ -1,10 +1,19 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { NextPage } from 'next'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import { classNames } from '~/lib/helper'
 import Logo from '~/components/Logo'
+import { FireIcon, HomeIcon, BellIcon, UserGroupIcon, ShareIcon } from '@heroicons/react/outline'
+import {
+  DotsVerticalIcon,
+  ThumbUpIcon,
+  SearchIcon,
+  ChatAltIcon,
+  EyeIcon,
+  PlusIcon,
+} from '@heroicons/react/solid'
 
 const Home: NextPage = () => {
   const [isNavOpen, setNavOpen] = useState(false)
@@ -40,20 +49,9 @@ const Home: NextPage = () => {
                   </label>
                   <div className="relative">
                     <div className="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
-                      <svg
-                        className="h-5 w-5 text-gray-400"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        aria-hidden="true"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
+                      <SearchIcon className="fill-current h-5 w-5 text-gray-400" />
                     </div>
+
                     <input
                       id="search"
                       name="search"
@@ -71,21 +69,7 @@ const Home: NextPage = () => {
                 className="ml-5 flex-shrink-0 bg-white rounded-full p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 <span className="sr-only">查看通知</span>
-                <svg
-                  className="h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                  />
-                </svg>
+                <BellIcon className="stroke-current h-6 w-6" />
               </a>
 
               <div className="flex-shrink-0 relative ml-5">
@@ -132,21 +116,7 @@ const Home: NextPage = () => {
                     className="bg-gray-200 text-gray-900 group flex items-center px-3 py-2 text-sm font-medium rounded-xl"
                     aria-current="page"
                   >
-                    <svg
-                      className="text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                      />
-                    </svg>
+                    <HomeIcon className="stroke-current text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6" />
                     <span className="truncate"> 主页 </span>
                   </a>
 
@@ -155,27 +125,7 @@ const Home: NextPage = () => {
                     className="text-gray-600 hover:bg-gray-50 group flex items-center px-3 py-2 text-sm font-medium rounded-xl"
                     aria-current="false"
                   >
-                    <svg
-                      className="text-gray-400 group-hover:text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"
-                      />
-                    </svg>
+                    <FireIcon className="text-gray-400 group-hover:text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6" />
                     <span className="truncate"> 最热文章 </span>
                   </a>
 
@@ -184,21 +134,7 @@ const Home: NextPage = () => {
                     className="text-gray-600 hover:bg-gray-50 group flex items-center px-3 py-2 text-sm font-medium rounded-xl"
                     aria-current="false"
                   >
-                    <svg
-                      className="text-gray-400 group-hover:text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                      />
-                    </svg>
+                    <UserGroupIcon className="text-gray-400 group-hover:text-gray-500 flex-shrink-0 -ml-1 mr-3 h-6 w-6" />
                     <span className="truncate"> 社区 </span>
                   </a>
                 </div>
@@ -329,15 +265,7 @@ const Home: NextPage = () => {
                                   aria-haspopup="true"
                                 >
                                   <span className="sr-only">更多选项</span>
-                                  <svg
-                                    className="h-5 w-5"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20"
-                                    fill="currentColor"
-                                    aria-hidden="true"
-                                  >
-                                    <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                                  </svg>
+                                  <DotsVerticalIcon className="h-5 w-5" />
                                 </button>
                               </div>
                             </div>
@@ -364,54 +292,21 @@ const Home: NextPage = () => {
                         <div className="flex space-x-6">
                           <span className="inline-flex items-center text-sm">
                             <button className="inline-flex space-x-2 text-gray-400 hover:text-gray-500">
-                              <svg
-                                className="h-5 w-5"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                aria-hidden="true"
-                              >
-                                <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
-                              </svg>
+                              <ThumbUpIcon className="h-5 w-5" />
                               <span className="font-medium text-gray-900">29</span>
                               <span className="sr-only">点赞</span>
                             </button>
                           </span>
                           <span className="inline-flex items-center text-sm">
                             <button className="inline-flex space-x-2 text-gray-400 hover:text-gray-500">
-                              <svg
-                                className="h-5 w-5"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                aria-hidden="true"
-                              >
-                                <path
-                                  fillRule="evenodd"
-                                  d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
-                                  clipRule="evenodd"
-                                />
-                              </svg>
+                              <ChatAltIcon className="h-5 w-5" />
                               <span className="font-medium text-gray-900">11</span>
                               <span className="sr-only">回复</span>
                             </button>
                           </span>
                           <span className="inline-flex items-center text-sm">
                             <button className="inline-flex space-x-2 text-gray-400 hover:text-gray-500">
-                              <svg
-                                className="h-5 w-5"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                aria-hidden="true"
-                              >
-                                <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                                <path
-                                  fillRule="evenodd"
-                                  d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
-                                  clipRule="evenodd"
-                                />
-                              </svg>
+                              <EyeIcon className="h-5 w-5" />
                               <span className="font-medium text-gray-900">2.7万</span>
                               <span className="sr-only">浏览</span>
                             </button>
@@ -420,15 +315,7 @@ const Home: NextPage = () => {
                         <div className="flex text-sm">
                           <span className="inline-flex items-center text-sm">
                             <button className="inline-flex space-x-2 text-gray-400 hover:text-gray-500">
-                              <svg
-                                className="h-5 w-5"
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 20 20"
-                                fill="currentColor"
-                                aria-hidden="true"
-                              >
-                                <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
-                              </svg>
+                              <ShareIcon className="h-5 w-5" />
                               <span className="font-medium text-gray-900">分享</span>
                             </button>
                           </span>
@@ -473,19 +360,7 @@ const Home: NextPage = () => {
                                 type="button"
                                 className="inline-flex items-center px-3 py-1 rounded-full bg-indigo-50 text-xs font-medium text-indigo-700 hover:bg-indigo-100"
                               >
-                                <svg
-                                  className="-ml-1 mr-0.5 h-5 w-5 text-indigo-400"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  viewBox="0 0 20 20"
-                                  fill="currentColor"
-                                  aria-hidden="true"
-                                >
-                                  <path
-                                    fillRule="evenodd"
-                                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                                    clipRule="evenodd"
-                                  />
-                                </svg>
+                                <PlusIcon className="-ml-1 mr-0.5 h-5 w-5 text-indigo-400" />
                                 <span> 关注 </span>
                               </button>
                             </div>
@@ -526,19 +401,7 @@ const Home: NextPage = () => {
                               <div className="mt-2 flex">
                                 <span className="inline-flex items-center text-sm">
                                   <button className="inline-flex space-x-2 text-gray-400 hover:text-gray-500">
-                                    <svg
-                                      className="h-5 w-5"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      viewBox="0 0 20 20"
-                                      fill="currentColor"
-                                      aria-hidden="true"
-                                    >
-                                      <path
-                                        fillRule="evenodd"
-                                        d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
-                                        clipRule="evenodd"
-                                      />
-                                    </svg>
+                                    <ChatAltIcon className="w-5 h-5" />
                                     <span className="font-medium text-gray-900">291</span>
                                   </button>
                                 </span>
