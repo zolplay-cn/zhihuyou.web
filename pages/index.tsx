@@ -14,6 +14,7 @@ import {
   EyeIcon,
   PlusIcon,
 } from '@heroicons/react/solid'
+import toast from 'react-hot-toast'
 
 const Home: NextPage = () => {
   const [isNavOpen, setNavOpen] = useState(false)
