@@ -3,8 +3,9 @@ import 'tailwindcss/tailwind.css'
 import { tippy } from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
 import 'tippy.js/themes/translucent.css'
-import React, { Fragment } from 'react'
 import { Toaster } from 'react-hot-toast'
+import { store } from '~/lib/store'
+import { Provider } from 'react-redux'
 
 function bootstrap() {
   tippy.setDefaultProps({
@@ -20,11 +21,11 @@ bootstrap()
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Fragment>
+    <Provider store={store}>
       <Component {...pageProps} />
 
       <Toaster position="bottom-right" reverseOrder toastOptions={{ className: 'toaster' }} />
-    </Fragment>
+    </Provider>
   )
 }
 
