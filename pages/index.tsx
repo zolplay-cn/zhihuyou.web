@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { NextPage } from 'next'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import { classNames } from '~/lib/helper'
 import Logo from '~/components/Logo'
