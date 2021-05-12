@@ -14,7 +14,6 @@ import {
   EyeIcon,
   PlusIcon,
 } from '@heroicons/react/solid'
-import Title from '~/components/head/Title'
 
 const Home: NextPage = () => {
   const [isNavOpen, setNavOpen] = useState(false)

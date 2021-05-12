@@ -1,6 +1,8 @@
 import { combineReducers } from '@reduxjs/toolkit'
-import theme from '~/features/users/theme.slice'
+import auth from '~/features/users/auth/auth.slice'
+import theme from '~/features/users/theme/theme.slice'
 
 export const user = combineReducers({
+  auth,
   theme,
 })
