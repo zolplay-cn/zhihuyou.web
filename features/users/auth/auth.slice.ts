@@ -10,7 +10,7 @@ export type AuthState = {
 export const initialState: AuthState = {}
 
 export const authSlice = createSlice({
-  name: 'user.auth',
+  name: 'auth',
   initialState,
   reducers: {
     /**
