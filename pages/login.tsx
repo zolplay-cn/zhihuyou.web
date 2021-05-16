@@ -3,19 +3,21 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { siteTitle } from '~/lib/helper'
 import { useDispatch } from 'react-redux'
-import AuthThunks from '~/features/users/auth/auth.thunks'
+import { authThunks } from '~/features/users/auth/auth.thunks'
 import { useState } from 'react'
 
 const LoginPage: NextPage = () => {
   const dispatch = useDispatch()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [remembers, setRemembers] = useState(true)
 
   const login = () => {
     dispatch(
-      AuthThunks.login({
+      authThunks.login({
         email,
         password,
+        remembers,
       })
     )
   }
@@ -87,6 +89,8 @@ const LoginPage: NextPage = () => {
                     name="remember_me"
                     type="checkbox"
                     className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                    defaultChecked={remembers}
+                    onChange={(event) => setRemembers(event.target.checked)}
                   />
                   <label htmlFor="remember_me" className="ml-2 block text-sm text-gray-900">
                     保持登录状态

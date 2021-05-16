@@ -10,7 +10,7 @@ export class Http {
    * @param options
    * @private
    */
-  private async fetch(uri: string, options: RequestInit = {}) {
+  private async fetch<T>(uri: string, options: RequestInit = {}): Promise<T> {
     const trimmedUri = (uri.substr(0, 1) === '/' ? uri.substr(1) : uri).trim()
     const response = await fetch(`${this.apiPrefix}/${trimmedUri}`, {
       headers: {
@@ -31,33 +31,33 @@ export class Http {
     return json
   }
 
-  public async $get(uri: string, queries?: Record<string, never>) {
+  public async $get<T>(uri: string, queries?: Record<string, string>): Promise<T> {
     const params = queries ? new URLSearchParams(queries) : undefined
     return this.fetch(params ? `${uri}?${params.toString()}` : uri)
   }
 
-  public async $post(uri: string, payload?: never) {
+  public async $post<T>(uri: string, payload?: unknown): Promise<T> {
     return this.fetch(uri, {
       method: 'POST',
       body: payload ? JSON.stringify(payload) : undefined,
     })
   }
 
-  public async $put(uri: string, payload?: never) {
+  public async $put<T>(uri: string, payload?: unknown): Promise<T> {
     return this.fetch(uri, {
       method: 'PUT',
       body: payload ? JSON.stringify(payload) : undefined,
     })
   }
 
-  public async $patch(uri: string, payload?: never) {
+  public async $patch<T>(uri: string, payload?: unknown): Promise<T> {
     return this.fetch(uri, {
       method: 'PATCH',
       body: payload ? JSON.stringify(payload) : undefined,
     })
   }
 
-  public async $delete(uri: string, payload?: any) {
+  public async $delete<T>(uri: string, payload?: unknown): Promise<T> {
     return this.fetch(uri, {
       method: 'DELETE',
       body: payload ? JSON.stringify(payload) : undefined,

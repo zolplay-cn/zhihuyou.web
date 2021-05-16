@@ -1,4 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { RootState } from '~/types/redux'
+import { authThunks } from '~/features/users/auth/auth.thunks'
 
 export type AuthState = {
   tokens?: {
@@ -22,8 +24,35 @@ export const authSlice = createSlice({
       state.tokens = undefined
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(
+      authThunks.login.fulfilled,
+      (state, { payload: { accessToken, refreshToken } }) => {
+        state.tokens = {
+          accessToken,
+          refreshToken,
+        }
+      }
+    )
+    builder.addCase(
+      authThunks.register.fulfilled,
+      (state, { payload: { accessToken, refreshToken } }) => {
+        state.tokens = {
+          accessToken,
+          refreshToken,
+        }
+      }
+    )
+  },
 })
 
+// --- reducer ---
 export default authSlice.reducer
 
+// --- actions ---
 export const { logout } = authSlice.actions
+
+// --- selectors ---
+export const authSelectors = {
+  isLoggedIn: (state: RootState): boolean => Boolean(state.user.auth.tokens?.accessToken),
+}
