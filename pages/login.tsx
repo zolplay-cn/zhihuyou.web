@@ -2,8 +2,24 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import { siteTitle } from '~/lib/helper'
+import { useDispatch } from 'react-redux'
+import AuthThunks from '~/features/users/auth/auth.thunks'
+import { useState } from 'react'
 
 const LoginPage: NextPage = () => {
+  const dispatch = useDispatch()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const login = () => {
+    dispatch(
+      AuthThunks.login({
+        email,
+        password,
+      })
+    )
+  }
+
   return (
     <>
       <Head>
@@ -22,7 +38,14 @@ const LoginPage: NextPage = () => {
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow-xl sm:rounded-xl sm:px-10">
-            <form className="space-y-6" action="#" method="POST">
+            <form
+              className="space-y-6"
+              action="#"
+              onSubmit={(e) => {
+                e.preventDefault()
+                login()
+              }}
+            >
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                   邮箱
@@ -35,6 +58,7 @@ const LoginPage: NextPage = () => {
                     autoComplete="email"
                     required
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    onChange={(event) => setEmail(event.target.value)}
                   />
                 </div>
               </div>
@@ -51,6 +75,7 @@ const LoginPage: NextPage = () => {
                     autoComplete="current-password"
                     required
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    onChange={(event) => setPassword(event.target.value)}
                   />
                 </div>
               </div>

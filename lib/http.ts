@@ -1,3 +1,5 @@
+import fetch from 'isomorphic-unfetch'
+
 export class Http {
   constructor(public readonly apiPrefix: string) {}
 
@@ -29,26 +31,26 @@ export class Http {
     return json
   }
 
-  public async $get(uri: string, queries?: Record<string, any>) {
+  public async $get(uri: string, queries?: Record<string, never>) {
     const params = queries ? new URLSearchParams(queries) : undefined
     return this.fetch(params ? `${uri}?${params.toString()}` : uri)
   }
 
-  public async $post(uri: string, payload?: any) {
+  public async $post(uri: string, payload?: never) {
     return this.fetch(uri, {
       method: 'POST',
       body: payload ? JSON.stringify(payload) : undefined,
     })
   }
 
-  public async $put(uri: string, payload?: any) {
+  public async $put(uri: string, payload?: never) {
     return this.fetch(uri, {
       method: 'PUT',
       body: payload ? JSON.stringify(payload) : undefined,
     })
   }
 
-  public async $patch(uri: string, payload?: any) {
+  public async $patch(uri: string, payload?: never) {
     return this.fetch(uri, {
       method: 'PATCH',
       body: payload ? JSON.stringify(payload) : undefined,
@@ -63,4 +65,4 @@ export class Http {
   }
 }
 
-export const http = new Http('/api/http')
+export const http = new Http(process.env.NEXT_PUBLIC_SERVER_URL || '/api')
