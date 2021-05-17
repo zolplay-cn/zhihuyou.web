@@ -14,6 +14,7 @@ import {
   EyeIcon,
   PlusIcon,
 } from '@heroicons/react/solid'
+import LoggedIn from '~/components/auth/LoggedIn'
 
 const Home: NextPage = () => {
   const [isNavOpen, setNavOpen] = useState(false)
@@ -75,23 +76,30 @@ const Home: NextPage = () => {
 
                 <div className="flex-shrink-0 relative ml-5">
                   <div>
-                    <button
-                      id="user-menu"
-                      type="button"
-                      className="bg-white relative h-8 w-8 rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      aria-expanded="false"
-                      aria-haspopup="true"
-                      onClick={() => setNavOpen(!isNavOpen)}
+                    <LoggedIn
+                      or={
+                        <Link href="/login">
+                          <a>登录</a>
+                        </Link>
+                      }
                     >
-                      <span className="sr-only">打开用户菜单</span>
-                      <Image
-                        layout="fill"
-                        className="rounded-full"
-                        quality="100"
-                        src="/assets/avatars/cali.png"
-                      />
-                    </button>
-                    {isNavOpen && <span>Open</span>}
+                      <button
+                        id="user-menu"
+                        type="button"
+                        className="bg-white relative h-8 w-8 rounded-full flex focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        aria-expanded="false"
+                        aria-haspopup="true"
+                        onClick={() => setNavOpen(!isNavOpen)}
+                      >
+                        <span className="sr-only">打开用户菜单</span>
+                        <Image
+                          layout="fill"
+                          className="rounded-full"
+                          quality="100"
+                          src="/assets/avatars/cali.png"
+                        />
+                      </button>
+                    </LoggedIn>
                   </div>
                 </div>
 

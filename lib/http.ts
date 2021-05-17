@@ -1,68 +1,53 @@
-import fetch from 'isomorphic-unfetch'
+import axios, { AxiosInstance } from 'axios'
+import { ThunkErrorResponsePayload } from '~/types/redux'
 
 export class Http {
-  constructor(public readonly apiPrefix: string) {}
-
-  /**
-   * Makes an HTTP call to the given endpoint and returns the JSON response.
-   *
-   * @param uri
-   * @param options
-   * @private
-   */
-  private async fetch<T>(uri: string, options: RequestInit = {}): Promise<T> {
-    const trimmedUri = (uri.substr(0, 1) === '/' ? uri.substr(1) : uri).trim()
-    const response = await fetch(`${this.apiPrefix}/${trimmedUri}`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      ...options,
+  constructor(public readonly baseURL: string) {
+    this.axios = axios.create({
+      baseURL,
+      withCredentials: true,
     })
+  }
 
-    if (!response.ok) {
-      throw new Error(response.statusText)
+  private readonly axios: AxiosInstance
+
+  private readonly request = async <T>(
+    $req: () => Promise<T>
+  ): Promise<T | ThunkErrorResponsePayload> => {
+    try {
+      return await $req()
+    } catch (e) {
+      return e.response.data as ThunkErrorResponsePayload
     }
-
-    const json = await response.json()
-    if (json.statusCode >= 400) {
-      throw new Error(json.message)
-    }
-
-    return json
   }
 
-  public async $get<T>(uri: string, queries?: Record<string, string>): Promise<T> {
-    const params = queries ? new URLSearchParams(queries) : undefined
-    return this.fetch(params ? `${uri}?${params.toString()}` : uri)
+  public async $get<T>(uri: string, queries?: Record<string, string>) {
+    return this.request<T>(() =>
+      this.axios.get<unknown, T>(uri, {
+        params: queries,
+      })
+    )
   }
 
-  public async $post<T>(uri: string, payload?: unknown): Promise<T> {
-    return this.fetch(uri, {
-      method: 'POST',
-      body: payload ? JSON.stringify(payload) : undefined,
-    })
+  public async $post<T>(uri: string, data?: unknown) {
+    return this.request<T>(() => this.axios.post<unknown, T>(uri, data))
   }
 
-  public async $put<T>(uri: string, payload?: unknown): Promise<T> {
-    return this.fetch(uri, {
-      method: 'PUT',
-      body: payload ? JSON.stringify(payload) : undefined,
-    })
+  public async $put<T>(uri: string, data?: unknown) {
+    return this.request<T>(() => this.axios.put<unknown, T>(uri, data))
   }
 
-  public async $patch<T>(uri: string, payload?: unknown): Promise<T> {
-    return this.fetch(uri, {
-      method: 'PATCH',
-      body: payload ? JSON.stringify(payload) : undefined,
-    })
+  public async $patch<T>(uri: string, data?: unknown) {
+    return this.request<T>(() => this.axios.patch<unknown, T>(uri, data))
   }
 
-  public async $delete<T>(uri: string, payload?: unknown): Promise<T> {
-    return this.fetch(uri, {
-      method: 'DELETE',
-      body: payload ? JSON.stringify(payload) : undefined,
-    })
+  public async $delete<T>(uri: string, data?: unknown) {
+    return this.request<T>(() =>
+      this.axios.delete<unknown, T>(uri, {
+        data,
+      })
+    )
   }
 }
 
-export const http = new Http(process.env.NEXT_PUBLIC_SERVER_URL || '/api')
+export const http = new Http('/api')

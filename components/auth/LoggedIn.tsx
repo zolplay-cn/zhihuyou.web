@@ -1,12 +1,12 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { useSelector } from 'react-redux'
 import { authSelectors } from '~/features/users/auth/auth.slice'
 
-const LoggedIn: FC = ({ children }) => {
+const LoggedIn: FC<{ or?: JSX.Element | JSX.Element[] }> = ({ children, or }) => {
   const isLoggedIn = useSelector(authSelectors.isLoggedIn)
 
   if (!isLoggedIn) {
-    return null
+    return or ? <>{or}</> : null
   }
 
   return <>{children}</>

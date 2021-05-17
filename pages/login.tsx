@@ -5,21 +5,28 @@ import { siteTitle } from '~/lib/helper'
 import { useDispatch } from 'react-redux'
 import { authThunks } from '~/features/users/auth/auth.thunks'
 import { useState } from 'react'
+import { ThunkDispatchResults } from '~/types/redux'
 
 const LoginPage: NextPage = () => {
   const dispatch = useDispatch()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [remembers, setRemembers] = useState(true)
+  const [formError, setFormError] = useState<string>()
 
-  const login = () => {
-    dispatch(
+  const login = async () => {
+    setFormError(undefined)
+
+    const results: ThunkDispatchResults = await dispatch(
       authThunks.login({
         email,
         password,
         remembers,
       })
     )
+    if (results.type === authThunks.login.rejected.type) {
+      setFormError(results.payload.message)
+    }
   }
 
   return (
@@ -30,12 +37,16 @@ const LoginPage: NextPage = () => {
 
       <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <img
-            className="mx-auto h-12 w-auto"
-            src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-            alt="Workflow"
-          />
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">登录账号</h2>
+          <Link href="/">
+            <a>
+              <img
+                className="mx-auto h-12 w-auto"
+                src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                alt="Workflow"
+              />
+              <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">登录账号</h2>
+            </a>
+          </Link>
         </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -45,7 +56,7 @@ const LoginPage: NextPage = () => {
               action="#"
               onSubmit={(e) => {
                 e.preventDefault()
-                login()
+                return login()
               }}
             >
               <div>
@@ -81,6 +92,12 @@ const LoginPage: NextPage = () => {
                   />
                 </div>
               </div>
+
+              {formError && (
+                <p className="mt-2 text-sm font-medium text-red-600" id="form-error">
+                  {formError}
+                </p>
+              )}
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
