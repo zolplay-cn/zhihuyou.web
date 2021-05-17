@@ -10,7 +10,7 @@ module.exports = {
   overrides: [
     // This configuration will apply only to TypeScript files
     {
-      files: ['**/*.ts', '**/*.tsx'],
+      files: ['next.config.js', '**/*.ts', '**/*.tsx'],
       parser: '@typescript-eslint/parser',
       settings: { react: { version: 'detect' } },
       env: {
@@ -38,6 +38,7 @@ module.exports = {
 
         // Why would you want unused vars?
         '@typescript-eslint/no-unused-vars': ['error'],
+        '@typescript-eslint/no-explicit-any': 'off',
 
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/explicit-module-boundary-types': 'off',

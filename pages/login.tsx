@@ -2,8 +2,33 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import Link from 'next/link'
 import { siteTitle } from '~/lib/helper'
+import { useDispatch } from 'react-redux'
+import { authThunks } from '~/features/users/auth/auth.thunks'
+import { useState } from 'react'
+import { ThunkDispatchResults } from '~/types/redux'
 
 const LoginPage: NextPage = () => {
+  const dispatch = useDispatch()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [remembers, setRemembers] = useState(true)
+  const [formError, setFormError] = useState<string>()
+
+  const login = async () => {
+    setFormError(undefined)
+
+    const results: ThunkDispatchResults = await dispatch(
+      authThunks.login({
+        email,
+        password,
+        remembers,
+      })
+    )
+    if (results.type === authThunks.login.rejected.type) {
+      setFormError(results.payload.message)
+    }
+  }
+
   return (
     <>
       <Head>
@@ -12,17 +37,28 @@ const LoginPage: NextPage = () => {
 
       <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <img
-            className="mx-auto h-12 w-auto"
-            src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-            alt="Workflow"
-          />
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">登录账号</h2>
+          <Link href="/">
+            <a>
+              <img
+                className="mx-auto h-12 w-auto"
+                src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                alt="Workflow"
+              />
+              <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">登录账号</h2>
+            </a>
+          </Link>
         </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow-xl sm:rounded-xl sm:px-10">
-            <form className="space-y-6" action="#" method="POST">
+            <form
+              className="space-y-6"
+              action="#"
+              onSubmit={(e) => {
+                e.preventDefault()
+                return login()
+              }}
+            >
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                   邮箱
@@ -35,6 +71,7 @@ const LoginPage: NextPage = () => {
                     autoComplete="email"
                     required
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    onChange={(event) => setEmail(event.target.value)}
                   />
                 </div>
               </div>
@@ -51,9 +88,16 @@ const LoginPage: NextPage = () => {
                     autoComplete="current-password"
                     required
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    onChange={(event) => setPassword(event.target.value)}
                   />
                 </div>
               </div>
+
+              {formError && (
+                <p className="mt-2 text-sm font-medium text-red-600" id="form-error">
+                  {formError}
+                </p>
+              )}
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
@@ -62,6 +106,8 @@ const LoginPage: NextPage = () => {
                     name="remember_me"
                     type="checkbox"
                     className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+                    defaultChecked={remembers}
+                    onChange={(event) => setRemembers(event.target.checked)}
                   />
                   <label htmlFor="remember_me" className="ml-2 block text-sm text-gray-900">
                     保持登录状态
